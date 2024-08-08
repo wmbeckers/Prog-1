@@ -8,13 +8,10 @@ while loop == 1:
         break
 
     num1 = input("Selecione o primeiro número: ")
-    print (num1) 
     
     oper = input("Selecione o operador:\n+: para adição\n-: para subtração\n*: para multiplicação\n/: para divisão\n **: para pontenciação\n")
-    print (oper)
 
     num2 = input("Selecione o segundo número: ")
-    print (num2)
     
     if oper == "+":
         result = float(num1) + float(num2)
