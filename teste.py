@@ -10,7 +10,7 @@ while loop == 1:
     num1 = input("Selecione o primeiro número: ")
     print (num1) 
     
-    oper = input("Selecione o operador:\n+: para adição\n-: para subtração\n*: para multiplicação\n/: para divisão.\n")
+    oper = input("Selecione o operador:\n+: para adição\n-: para subtração\n*: para multiplicação\n/: para divisão\n **: para pontenciação")
     print (oper)
 
     num2 = input("Selecione o segundo número: ")
@@ -24,6 +24,8 @@ while loop == 1:
         result = float(num1) * float(num2)
     elif oper == "/":
         result = float(num1) / float(num2)
+    elif oper == "**":
+        result = float(num1) ** float(num2)
     else:
         print("Operador inválido!")
 
