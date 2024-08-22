@@ -1,0 +1,8 @@
+x1 = input('Insira o primeiro valor\n')
+x2 = input('Insira o segundo valor\n')
+x3 = input('Insira o terceiro valor\n')
+x1 = int(x1)
+x2 = int(x2)
+x3 = int(x3)
+print('O maior valor inserido foi ', max(x1, x2, x3)'\n')
+print('O menor valor inserido foi ', min(x1, x2, x3))
