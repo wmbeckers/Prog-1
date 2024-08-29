@@ -1,7 +1,4 @@
-A = int(input("Digite o valor de A: "))
-B = int(input("Digite o valor de B: "))
-C = int(input("Digite o valor de C: "))
-D = int(input("Digite o valor de D: "))
+A, B, C, D = map(int, input("Digite os valores de A, B, C e D separados por espaço: ").split())
 if B > C and D > A and C + D > A + B and C > 0 and D > 0 and A % 2 == 0:
     print("Valores aceitos")
 else:
