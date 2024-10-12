@@ -17,12 +17,15 @@ df['MedHouseVal'] = california_housing.target
 description = df.describe()
 print(description)
 
-# Calcula as  métricas estatísticas
-metricas = df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].agg(['mean', 'median', lambda x: x.mode()[0], 'var', 'std', 'quantile'])
-# Calcula o IQR
-metricas.loc['IQR'] = df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].quantile(0.75) - df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].quantile(0.25)
-
-print(metricas)
+# Calcula as métricas estatísticas de cada variável separadamente
+variables = ['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']
+for var in variables:
+    metricas = df[var].agg(['mean', 'median', lambda x: x.mode()[0], 'var', 'std', 'quantile'])
+    metricas['IQR'] = df[var].quantile(0.75) - df[var].quantile(0.25)
+    metricas.index = ['mean', 'median', 'mode', 'var', 'std', 'quantile', 'IQR']
+    print(f"Métricas estatísticas para {var}:")
+    print(metricas)
+    print("\n")
 
 # Cria um gráfico de dispersão da latitude e longitude
 sns.scatterplot(x='Longitude', y='Latitude', data=df, hue='MedHouseVal', palette='viridis', legend=None)
