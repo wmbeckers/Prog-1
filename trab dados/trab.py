@@ -3,30 +3,28 @@ import pandas as pd
 import seaborn as sns
 import sklearn
 from sklearn.datasets import fetch_california_housing
+import matplotlib.pyplot as plt
 
 california_housing = fetch_california_housing()
 
 df = pd.DataFrame(data=california_housing.data, columns=california_housing.feature_names)
-df['MedHouseVal'] = california_housing.target
+df['ValorMedioCasa'] = california_housing.target
 
-description = df.describe()
-print(description)
+descricao = df.describe()
+print(descricao)
 
-metrics = df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].agg(['mean', 'median', lambda x: x.mode()[0], 'var', 'std', 'quantile'])
-metrics.loc['IQR'] = df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].quantile(0.75) - df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].quantile(0.25)
+metricas = df[['RendaMed', 'IdadeCasa', 'MediaComodos', 'MediaQuartos', 'Populacao', 'MediaOcupacao']].agg(['media', 'mediana', lambda x: x.mode()[0], 'variancia', 'desvio_padrao', 'quantil'])
+metricas.loc['IQR'] = df[['RendaMed', 'IdadeCasa', 'MediaComodos', 'MediaQuartos', 'Populacao', 'MediaOcupacao']].quantile(0.75) - df[['RendaMed', 'IdadeCasa', 'MediaComodos', 'MediaQuartos', 'Populacao', 'MediaOcupacao']].quantile(0.25)
 
-metrics.rename(index={metrics.index[2]: 'moda'}, inplace=True)
+print(metricas)
 
-print(metrics)
+sns.scatterplot(x='Longitude', y='Latitude', data=df, hue='ValorMedioCasa', palette='viridis', legend=None)
 
-sns.scatterplot(x='Longitude', y='Latitude', data=df, hue='MedHouseVal', palette='viridis', legend=None)
-
-import matplotlib.pyplot as plt
 plt.show()
 
-variables = ['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']
+variaveis = ['RendaMed', 'IdadeCasa', 'MediaComodos', 'MediaQuartos', 'Populacao', 'MediaOcupacao']
 
-for var in variables:
+for var in variaveis:
     plt.figure(figsize=(12, 6))
     
     plt.subplot(1, 2, 1)
