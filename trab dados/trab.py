@@ -1,3 +1,4 @@
+# importa as bibliotecas necessárias
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -5,26 +6,34 @@ import sklearn
 from sklearn.datasets import fetch_california_housing
 import matplotlib.pyplot as plt
 
+# Carrega o conjunto de dados 
 california_housing = fetch_california_housing()
 
+# Cria um DataFrame com os dados do conjunto 
 df = pd.DataFrame(data=california_housing.data, columns=california_housing.feature_names)
-df['ValorMedioCasa'] = california_housing.target
+df['MedHouseVal'] = california_housing.target
 
-descricao = df.describe()
-print(descricao)
+# Descreve estatísticas básicas do DataFrame
+description = df.describe()
+print(description)
 
-metricas = df[['RendaMed', 'IdadeCasa', 'MediaComodos', 'MediaQuartos', 'Populacao', 'MediaOcupacao']].agg(['media', 'mediana', lambda x: x.mode()[0], 'variancia', 'desvio_padrao', 'quantil'])
-metricas.loc['IQR'] = df[['RendaMed', 'IdadeCasa', 'MediaComodos', 'MediaQuartos', 'Populacao', 'MediaOcupacao']].quantile(0.75) - df[['RendaMed', 'IdadeCasa', 'MediaComodos', 'MediaQuartos', 'Populacao', 'MediaOcupacao']].quantile(0.25)
+# Calcula as  métricas estatísticas
+metricas = df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].agg(['mean', 'median', lambda x: x.mode()[0], 'var', 'std', 'quantile'])
+# Calcula o IQR
+metricas.loc['IQR'] = df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].quantile(0.75) - df[['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']].quantile(0.25)
 
 print(metricas)
 
-sns.scatterplot(x='Longitude', y='Latitude', data=df, hue='ValorMedioCasa', palette='viridis', legend=None)
+# Cria um gráfico de dispersão da latitude e longitude
+sns.scatterplot(x='Longitude', y='Latitude', data=df, hue='MedHouseVal', palette='viridis', legend=None)
 
 plt.show()
 
-variaveis = ['RendaMed', 'IdadeCasa', 'MediaComodos', 'MediaQuartos', 'Populacao', 'MediaOcupacao']
+# Lista de variáveis para análise
+variables = ['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup']
 
-for var in variaveis:
+# Gera gráficos de BoxPlot e Histogramas para cada variável na lista
+for var in variables:
     plt.figure(figsize=(12, 6))
     
     plt.subplot(1, 2, 1)
